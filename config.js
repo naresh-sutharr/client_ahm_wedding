@@ -4,7 +4,7 @@
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v4';
+  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v5';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },
@@ -196,7 +196,7 @@
       text: 'We can’t wait to celebrate this special day with you. Thank you for being part of our journey.',
     },
 
-    farewell: { line: 'Your Presence Means the World to Us' },
+    farewell: { line: 'Your Presence & Blessings Mean the World to Us' },
 
     social: { instagram: false, instagramUrl: '' },
 

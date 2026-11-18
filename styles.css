@@ -1154,6 +1154,9 @@ body::before {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  border: none;
+  outline: none;
 }
 
 /* Up, over and down. The rise ends at a standstill and the fall begins at
@@ -1323,6 +1326,109 @@ body::before {
   .royale-date__after {
     animation-duration: 1ms;
     animation-delay: 0s;
+  }
+}
+
+/* --- Live Royal Countdown Timer --- */
+.royale-countdown {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(20px, 3.5vw, 42px);
+  padding: 0 16px;
+  text-align: center;
+}
+
+.royale-countdown__title {
+  margin: 0 0 clamp(14px, 2.2vw, 24px);
+  font-family: var(--font-names);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 34px);
+  line-height: 1.2;
+  color: var(--royale-crimson);
+  letter-spacing: 0.02em;
+}
+
+.royale-countdown__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 2vw, 24px);
+  max-width: min(100%, 740px);
+  margin: 0 auto;
+}
+
+.royale-countdown__card {
+  position: relative;
+  aspect-ratio: 84 / 60;
+  background: url("media/date_window.svg") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 0.5cqw 1cqw rgb(74 2 30 / 0.22));
+  transition: transform 0.2s ease;
+}
+
+.royale-countdown__card:hover {
+  transform: translateY(-2px);
+}
+
+.royale-countdown__cap {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 0;
+  height: 25%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(7.5px, 1.35vw, 14px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--royale-door);
+}
+
+.royale-countdown__window {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 26%;
+  bottom: 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.royale-countdown__num {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3.4vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #feb669;
+  text-shadow: 0 1px 3px rgba(40, 2, 16, 0.7), 0 0 10px rgba(254, 182, 105, 0.3);
+}
+
+@media (max-width: 699px) {
+  .royale-countdown {
+    margin-top: 18px;
+    padding: 0 6px;
+  }
+
+  .royale-countdown__title {
+    font-size: clamp(17px, 4.8vw, 22px);
+    margin-bottom: 12px;
+  }
+
+  .royale-countdown__grid {
+    gap: 6px;
+  }
+
+  .royale-countdown__cap {
+    font-size: clamp(7px, 2.2vw, 10.5px);
+    letter-spacing: 0.06em;
+  }
+
+  .royale-countdown__num {
+    font-size: clamp(15px, 5vw, 22px);
   }
 }
 
@@ -2363,55 +2469,107 @@ body::before {
   color: var(--royale-door);
 }
 
-.royale-outro__names,
-.royale-outro__line {
-  margin: 0;
+.royale-outro__family {
+  margin: 0 0 0.25em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--royale-door);
+  text-wrap: balance;
+}
+
+.royale-outro__welcome {
+  margin: 0 0 0.15em;
   font-family: var(--font-names);
   font-style: italic;
-  /* The phone board is narrow enough to wrap both lines; even them out
-     rather than leave "to Us" alone on the last one. */
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--royale-door);
+  text-wrap: balance;
+}
+
+.royale-outro__invite {
+  margin: 0 0 0.35em;
+  font-family: var(--font-names);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  color: rgba(82, 2, 31, 0.85);
   text-wrap: balance;
 }
 
 .royale-outro__names {
-  margin-bottom: 0.7em;
-  font-weight: 600;
+  margin: 0 0 0.4em;
+  font-family: var(--font-names);
+  font-style: italic;
+  font-weight: 700;
   line-height: 1.2;
+  color: var(--royale-door);
+  text-wrap: balance;
 }
 
 .royale-outro__line {
+  margin: 0;
+  font-family: var(--font-names);
+  font-style: italic;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.35;
+  color: rgba(82, 2, 31, 0.85);
+  text-wrap: balance;
 }
 
 @media (max-width: 699px) {
   .royale-outro__board {
     top: 45%;
+    width: 44%;
+  }
+
+  .royale-outro__family {
+    font-size: 5.6cqw;
+  }
+
+  .royale-outro__welcome {
+    font-size: 4.8cqw;
+  }
+
+  .royale-outro__invite {
+    font-size: 3.8cqw;
   }
 
   .royale-outro__names {
-    font-size: 8cqw;
+    font-size: 5.8cqw;
   }
 
   .royale-outro__line {
-    font-size: 5.8cqw;
+    font-size: 3.8cqw;
   }
 }
 
 @media (min-width: 700px) {
   .royale-outro__board {
     top: 39.5%;
-    width: 31%;
+    width: 32%;
   }
 
-  /* Down by the same 31/38 the board itself came in, so the writing keeps
-     its measure on the narrower panel. */
+  .royale-outro__family {
+    font-size: 2.1cqw;
+  }
+
+  .royale-outro__welcome {
+    font-size: 1.7cqw;
+  }
+
+  .royale-outro__invite {
+    font-size: 1.35cqw;
+  }
+
   .royale-outro__names {
-    font-size: 2.8cqw;
+    font-size: 2.2cqw;
   }
 
   .royale-outro__line {
-    font-size: 2cqw;
+    font-size: 1.4cqw;
   }
 }
 

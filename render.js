@@ -649,10 +649,27 @@
 
   // ---- The closing board -------------------------------------------------
   function renderFarewell() {
+    const family = document.querySelector('.royale-outro__family');
+    if (family) {
+      family.textContent = 'The Dahiya Family';
+    }
+    const welcome = document.querySelector('.royale-outro__welcome');
+    if (welcome) {
+      const guest = guestHtml();
+      if (guest) {
+        welcome.innerHTML = 'Cordially Welcomes<br>' + guest;
+      } else {
+        welcome.textContent = 'Cordially Welcomes You';
+      }
+    }
+    const invite = document.querySelector('.royale-outro__invite');
+    if (invite) {
+      invite.textContent = 'to Celebrate the Wedding of';
+    }
     const names = document.querySelector('.royale-outro__names');
     if (names) {
-      names.innerHTML = guestHtml();
-      names.hidden = names.innerHTML === '';
+      names.innerHTML = 'Dhaval Singh &amp; Bhanvi Kanwar';
+      names.hidden = false;
     }
     editable(document.querySelector('.royale-outro__line'), 'farewell.line', cfg.farewell.line, { placeholder: 'Your closing line' });
   }

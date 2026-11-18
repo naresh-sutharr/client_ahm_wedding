@@ -279,6 +279,37 @@
             </div>
             <p class="royale-date__said" id="ryRevealSaid" aria-live="polite"></p>
         </div>
+
+        <!-- Live Royal Countdown Timer -->
+        <div class="royale-countdown" id="ryCountdown" aria-label="Countdown to wedding celebrations">
+            <p class="royale-countdown__title">Counting Down to the Auspicious Day</p>
+            <div class="royale-countdown__grid" role="timer" aria-live="polite">
+                <div class="royale-countdown__card">
+                    <span class="royale-countdown__cap">Days</span>
+                    <div class="royale-countdown__window">
+                        <span class="royale-countdown__num" id="ryCountDays">00</span>
+                    </div>
+                </div>
+                <div class="royale-countdown__card">
+                    <span class="royale-countdown__cap">Hours</span>
+                    <div class="royale-countdown__window">
+                        <span class="royale-countdown__num" id="ryCountHours">00</span>
+                    </div>
+                </div>
+                <div class="royale-countdown__card">
+                    <span class="royale-countdown__cap">Minutes</span>
+                    <div class="royale-countdown__window">
+                        <span class="royale-countdown__num" id="ryCountMins">00</span>
+                    </div>
+                </div>
+                <div class="royale-countdown__card">
+                    <span class="royale-countdown__cap">Seconds</span>
+                    <div class="royale-countdown__window">
+                        <span class="royale-countdown__num" id="ryCountSecs">00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- The marble pavilion -->
@@ -707,8 +738,11 @@
         </picture>
         <div class="royale-outro__easel">
             <div class="royale-outro__board">
+                <p class="royale-outro__family">The Dahiya Family</p>
+                <p class="royale-outro__welcome">Cordially Welcomes You</p>
+                <p class="royale-outro__invite">to Celebrate the Wedding of</p>
                 <p class="royale-outro__names">Dhaval Singh &amp; Bhanvi Kanwar</p>
-                <p class="royale-outro__line">Your Presence Means the World to Us</p>
+                <p class="royale-outro__line">Your Presence &amp; Blessings Mean the World to Us</p>
             </div>
         </div>
         <img class="ry-tear ry-tear--bottom" src="media/section_divider.svg" alt="" loading="lazy" decoding="async">
@@ -763,6 +797,7 @@
     <script src="render.js"></script>
     <script src="app.js"></script>
     <script src="date-reveal.js"></script>
+    <script src="countdown.js"></script>
     <script src="gallery.js"></script>
     <script src="social.js"></script>
 
