@@ -186,9 +186,15 @@
     editable($(p + 'RelLabel'), path + '.relLabel', family.relLabel, { placeholder: 'e.g. Son of' });
     editable($(p + 'ParentA'), path + '.parentA', family.parentA, { placeholder: "Parent's name" });
     editable($(p + 'ParentB'), path + '.parentB', family.parentB, { placeholder: "Parent's name" });
-    editable($(p + 'GrandLabel'), path + '.grandLabel', family.grandLabel, { placeholder: 'e.g. Grandson of' });
-    editable($(p + 'GrandA'), path + '.grandA', family.grandA, { placeholder: "Grandparent's name" });
-    editable($(p + 'GrandB'), path + '.grandB', family.grandB, { placeholder: "Grandparent's name" });
+
+    const grandBlock = $(p + 'GrandBlock');
+    const hasGrand = !!(family && ((family.grandA && family.grandA.trim()) || (family.grandB && family.grandB.trim())));
+    if (grandBlock) {
+      grandBlock.style.display = hasGrand ? '' : 'none';
+    }
+    if ($(p + 'GrandLabel')) editable($(p + 'GrandLabel'), path + '.grandLabel', family.grandLabel, { placeholder: 'e.g. Grandson of' });
+    if ($(p + 'GrandA')) editable($(p + 'GrandA'), path + '.grandA', family.grandA, { placeholder: "Grandparent's name" });
+    if ($(p + 'GrandB')) editable($(p + 'GrandB'), path + '.grandB', family.grandB, { placeholder: "Grandparent's name" });
   }
 
   function renderFamilies() {
@@ -253,10 +259,10 @@
     const type = item.type === 'story' ? 'story' : item.type === 'landscape' ? 'landscape' : 'portrait';
     const controls = edit && RY.canEdit('gallery.items')
       ? '<div class="ry-frame-controls">' +
-        '<button type="button" data-action="gallery-move" data-dir="-1" data-index="' + i + '" title="Move back">◀</button>' +
-        '<button type="button" data-action="gallery-remove" data-index="' + i + '" title="Remove">✕</button>' +
-        '<button type="button" data-action="gallery-move" data-dir="1" data-index="' + i + '" title="Move on">▶</button>' +
-        '</div>'
+      '<button type="button" data-action="gallery-move" data-dir="-1" data-index="' + i + '" title="Move back">◀</button>' +
+      '<button type="button" data-action="gallery-remove" data-index="' + i + '" title="Remove">✕</button>' +
+      '<button type="button" data-action="gallery-move" data-dir="1" data-index="' + i + '" title="Move on">▶</button>' +
+      '</div>'
       : '';
 
     const head =
@@ -296,7 +302,7 @@
     const py = Number.isFinite(+item.posY) ? Math.min(100, Math.max(0, +item.posY)) : 50;
     const imgTag = img
       ? '<img class="gframe__img" src="' + esc(img) + '" alt="" draggable="false" ' +
-        'data-zoom="' + zoom + '" data-pos-x="' + px + '" data-pos-y="' + py + '">'
+      'data-zoom="' + zoom + '" data-pos-x="' + px + '" data-pos-y="' + py + '">'
       : '';
 
     const canEditGallery = edit && RY.canEdit('gallery.items');
@@ -312,10 +318,10 @@
     // itself, and on a phone the slider took a third of the frame's width.
     const photo = canEditGallery
       ? '<div class="gframe__photo gframe__photo--adjust" data-adjust="' + i + '" ' +
-        'title="' + (img ? 'Tap to change, drag to move, scroll or pinch to zoom' : 'Tap to add a photo') + '">' +
-        imgTag + (img ? '' : '<span class="gframe__placeholder">Tap to add a photo</span>') + '</div>'
+      'title="' + (img ? 'Tap to change, drag to move, scroll or pinch to zoom' : 'Tap to add a photo') + '">' +
+      imgTag + (img ? '' : '<span class="gframe__placeholder">Tap to add a photo</span>') + '</div>'
       : '<div class="gframe__photo">' + imgTag +
-        (img ? '' : '<span class="gframe__placeholder">Your photo here</span>') + '</div>';
+      (img ? '' : '<span class="gframe__placeholder">Your photo here</span>') + '</div>';
     return head +
       '<figure class="gframe__mat">' +
       photo +
@@ -399,7 +405,7 @@
     // left or top edge flush; 50 backs it off by half the spare and centres
     // it, 100 by all of it and brings the far edge in.
     el.style.transform = 'translate(' + (-(x / 100) * spareX) + 'px,' +
-                                        (-(y / 100) * spareY) + 'px)';
+      (-(y / 100) * spareY) + 'px)';
     return { ovX: Math.max(0, spareX / 2), ovY: Math.max(0, spareY / 2) };
   }
 
@@ -467,7 +473,7 @@
     const py = Number.isFinite(+c.posY) ? Math.min(100, Math.max(0, +c.posY)) : 50;
     const img = src
       ? '<img class="ryc-card__photo-img" src="' + esc(src) + '" alt="" draggable="false" decoding="async" ' +
-        'data-zoom="' + zoom + '" data-zoom-min="' + min + '" data-pos-x="' + px + '" data-pos-y="' + py + '">'
+      'data-zoom="' + zoom + '" data-zoom-min="' + min + '" data-pos-x="' + px + '" data-pos-y="' + py + '">'
       : '';
     if (!editable) return '<div class="ryc-card__photo"><div class="ryc-card__photo-box">' + img + '</div></div>';
     return '<div class="ryc-card__photo">' +
@@ -507,15 +513,15 @@
       (c.custom
         ? ''
         : '<div class="ryc-card__artwell">' +
-          '<img class="ryc-card__art" src="' + esc(c.art || '') + '" alt="" aria-hidden="true" loading="lazy" decoding="async">' +
-          '</div>') +
+        '<img class="ryc-card__art" src="' + esc(c.art || '') + '" alt="" aria-hidden="true" loading="lazy" decoding="async">' +
+        '</div>') +
       '<h3 class="ryc-card__name"' + ed('ceremonies.' + i + '.name', { placeholder: c.custom ? 'Ceremony name' : 'Ceremony' }) + '>' + esc(name) + '</h3>' +
       '<div class="ryc-card__foot">' +
       '<div class="ryc-card__where">' +
       '<p class="ryc-card__venue"' + ed('ceremonies.' + i + '.venue', { placeholder: 'Venue' }) + '>' + esc(c.venue || '') + '</p>' +
       (map
         ? '<a class="ryc-card__map" href="' + esc(map) + '" target="_blank" rel="noopener" aria-label="' + esc(name) + ' venue on the map">' +
-          '<img src="media/location.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"></a>'
+        '<img src="media/location.svg" alt="" aria-hidden="true" loading="lazy" decoding="async"></a>'
         : '') +
       '</div>' +
       // The time is optional: a ceremony with none simply shows its date,
@@ -523,16 +529,16 @@
       '<p class="ryc-card__when">' +
       (editable
         ? '<span class="ry-cere-field"><input type="date" data-edit-input="ceremonies.' + i + '.date" value="' + esc(c.date || '') + '"></span>' +
-          (c.time
-            // A time already set: the field, plus an explicit way to take it off.
-            // Clearing a native <input type="time"> is fiddly and browser-specific,
-            // which made an optional field feel mandatory - the same reason
-            // rose-invitation grew this pair.
-            ? '<span class="ry-cere-field ry-cere-field--time"><input type="time" data-edit-input="ceremonies.' + i + '.time" value="' + esc(c.time) + '" title="Time (optional)">' +
-              '<button type="button" class="ry-cere-time-x" data-action="ceremony-time-remove" data-index="' + i + '" title="Remove the time" aria-label="Remove the time">&times;</button></span>'
-            : '<span class="ry-cere-field ry-cere-field--time"><button type="button" class="ry-cere-time-add" data-action="ceremony-time-add" data-index="' + i + '">+ Add time</button></span>')
+        (c.time
+          // A time already set: the field, plus an explicit way to take it off.
+          // Clearing a native <input type="time"> is fiddly and browser-specific,
+          // which made an optional field feel mandatory - the same reason
+          // rose-invitation grew this pair.
+          ? '<span class="ry-cere-field ry-cere-field--time"><input type="time" data-edit-input="ceremonies.' + i + '.time" value="' + esc(c.time) + '" title="Time (optional)">' +
+          '<button type="button" class="ry-cere-time-x" data-action="ceremony-time-remove" data-index="' + i + '" title="Remove the time" aria-label="Remove the time">&times;</button></span>'
+          : '<span class="ry-cere-field ry-cere-field--time"><button type="button" class="ry-cere-time-add" data-action="ceremony-time-add" data-index="' + i + '">+ Add time</button></span>')
         : '<span class="ryc-card__date">' + esc(RY.fmtDate(c.date)) + '</span>' +
-          (RY.fmtTime(c.time) ? '<span class="ryc-card__time">' + esc(RY.fmtTime(c.time)) + '</span>' : '')) +
+        (RY.fmtTime(c.time) ? '<span class="ryc-card__time">' + esc(RY.fmtTime(c.time)) + '</span>' : '')) +
       '</p>' +
       '</div></div></article>';
 
@@ -553,10 +559,10 @@
     // itself apart from a drag.
     const zoom = c.custom && (c.art || '').trim()
       ? '<div class="ry-cere-photo"><span>Photo</span>' +
-        '<button type="button" data-action="ceremony-zoom" data-dir="-1" data-index="' + i + '" title="Zoom out" aria-label="Zoom out">&minus;</button>' +
-        '<button type="button" data-action="ceremony-zoom" data-dir="1" data-index="' + i + '" title="Zoom in" aria-label="Zoom in">+</button>' +
-        '<button type="button" data-action="ceremony-photo" data-index="' + i + '">Change photo</button>' +
-        '</div>'
+      '<button type="button" data-action="ceremony-zoom" data-dir="-1" data-index="' + i + '" title="Zoom out" aria-label="Zoom out">&minus;</button>' +
+      '<button type="button" data-action="ceremony-zoom" data-dir="1" data-index="' + i + '" title="Zoom in" aria-label="Zoom in">+</button>' +
+      '<button type="button" data-action="ceremony-photo" data-index="' + i + '">Change photo</button>' +
+      '</div>'
       : '';
 
     // The pin on the card searches for the venue on its own; this is for a

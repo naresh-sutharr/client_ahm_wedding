@@ -1,10 +1,10 @@
-// Royale - Wedding Invitation Configuration for Gunjan & Sagar
+// Royale - Wedding Invitation Configuration for Bhavikunwar & Dhawalsingh
 (function () {
   const params = new URLSearchParams(location.search);
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_GunjanSagar_v3';
+  const STORAGE_KEY = 'royaleConfig_BhavikunwarDhawalsingh_v1';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },
@@ -77,17 +77,17 @@
     return { religion: religion, script: chosen, text: scr.text, font: scr.font, rtl: !!scr.rtl, isEnglish: false };
   }
 
-  const VIVAAH_ISO = '2026-11-21';
+  const VIVAAH_ISO = '2026-12-12';
 
   const GALLERY_STARTERS = [
-    { type: 'portrait', image: '1.png', placeholder: false, caption: '#howitstarted', hang: 118 },
+    { type: 'landscape', image: '1.png', placeholder: false, caption: '#howitstarted', hang: 118 },
     { type: 'landscape', image: '2.png', placeholder: false, caption: '#adventures', hang: 150 },
     { type: 'story', text: 'Some stories begin with grand gestures. Ours started with a simple conversation.', hang: 86 },
     { type: 'portrait', image: '3.png', placeholder: false, caption: '#thelittlethings', hang: 132 },
-    { type: 'landscape', image: '4.png', placeholder: false, caption: '#everyday', hang: 100 },
+    { type: 'portrait', image: '4.png', placeholder: false, caption: '#everyday', hang: 100 },
     { type: 'story', text: "Friendship grew into something more, and we realized life's best moments were the ones we shared together.", hang: 120 },
     { type: 'portrait', image: '5.png', placeholder: false, caption: '#foreverbegins', hang: 150 },
-    { type: 'landscape', image: '6.png', placeholder: false, caption: '#usforever', hang: 92 },
+    { type: 'portrait', image: '6.png', placeholder: false, caption: '#usforever', hang: 92 },
   ];
 
   const DEFAULTS = {
@@ -96,10 +96,10 @@
 
     invocation: { symbol: 'ganesha', religion: 'hindu', script: 'devanagari', custom: '' },
 
-    brideName: 'Gunjan',
-    groomName: 'Sagar',
-    title: 'Gunjan & Sagar',
-    hostNames: ['Gunjan', 'Sagar'],
+    brideName: 'Bhavikunwar',
+    groomName: 'Dhawalsingh',
+    title: 'Bhavikunwar & Dhawalsingh',
+    hostNames: ['Bhavikunwar', 'Dhawalsingh'],
 
     introNote: 'we cordially invite you to grace the auspicious occasion of the marriage of…',
 
@@ -109,23 +109,23 @@
 
     groomFamily: {
       enabled: true,
-      name: 'Chi. Sagar',
+      name: 'Chi. Dhawalsingh Dahiya',
       relLabel: 'Son of',
-      parentA: 'Shri Ramesh Chandra Sharma',
-      parentB: 'Smt. Sunita Sharma',
-      grandLabel: 'Grandson of',
-      grandA: 'Late Shri Pandit Brij Mohan Sharma',
-      grandB: 'Late Smt. Kamla Devi Sharma',
+      parentA: 'Shri Paresh Singh Daya (Dahiya)',
+      parentB: 'Smt. Hinawarkunwar',
+      grandLabel: '',
+      grandA: '',
+      grandB: '',
     },
     brideFamily: {
       enabled: true,
-      name: 'Kum. Gunjan',
+      name: 'Kum. Bhavikunwar',
       relLabel: 'Daughter of',
-      parentA: 'Shri Rajesh Kumar Verma',
-      parentB: 'Smt. Meera Verma',
-      grandLabel: 'Granddaughter of',
-      grandA: 'Late Shri Hari Prasad Verma',
-      grandB: 'Late Smt. Shanti Devi Verma',
+      parentA: 'Shri Dinesh Singh Bhati',
+      parentB: 'Smt. Gayatrikunwar',
+      grandLabel: '',
+      grandA: '',
+      grandB: '',
     },
 
     gallery: {
@@ -135,39 +135,48 @@
 
     ceremonies: [
       {
-        name: 'Mehndi',
-        art: 'media/mehendi.webp',
-        date: '2026-11-19',
-        time: '18:00',
-        venue: '144, Randaldham society, new sama road, Vadodara-390024',
-        mapUrl: 'https://www.google.com/maps/search/?api=1&query=144%2C+Randaldham+society%2C+new+sama+road%2C+Vadodara-390024',
-        enabled: true
-      },
-      {
-        name: 'Haldi',
-        art: 'media/haldi.webp',
-        date: '2026-11-20',
-        time: '10:00',
-        venue: 'Shivay Party Plot, Sama Savli Road, near narmada canal, Vadodara-Gujarat 390024',
-        mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shivay+Party+Plot%2C+Sama+Savli+Road%2C+near+narmada+canal%2C+Vadodara-Gujarat+390024',
+        name: 'Ganesh and Gruhshanti Rituals',
+        art: 'media/gruhshanti.png',
+        date: '2026-12-10',
+        time: '07:00',
+        venue: '3, Nandbag Soc, Nr. Shrinath Partyplot, Nikol, Ahmedabad 382350',
+        mapUrl: 'https://maps.app.goo.gl/fmoqbroVXpqxZF8a8?g_st=iw',
         enabled: true
       },
       {
         name: 'Sangeet',
         art: 'media/sangeet.webp',
-        date: '2026-11-20',
-        time: '18:00',
-        venue: 'Shivay Party Plot, Sama Savli Road, near narmada canal, Vadodara-Gujarat 390024',
-        mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shivay+Party+Plot%2C+Sama+Savli+Road%2C+near+narmada+canal%2C+Vadodara-Gujarat+390024',
+        date: '2026-12-10',
+        time: '21:00',
+        venue: '3, Nandbag Soc, Nr. Shrinath Partyplot, Nikol, Ahmedabad 382350',
+        mapUrl: 'https://maps.app.goo.gl/fmoqbroVXpqxZF8a8?g_st=iw',
+        enabled: true
+      },
+      {
+        name: 'Haldi',
+        art: 'media/haldi.webp',
+        date: '2026-12-11',
+        time: '10:00',
+        venue: '3, Nandbag Soc, Nr. Shrinath Partyplot, Nikol, Ahmedabad 382350',
+        mapUrl: 'https://maps.app.goo.gl/fmoqbroVXpqxZF8a8?g_st=iw',
         enabled: true
       },
       {
         name: 'Wedding Day',
         art: 'media/vivaah.webp',
-        date: '2026-11-21',
+        date: '2026-12-12',
+        time: '17:30',
+        venue: 'Galaxy Hotel, Opp. 72 feet Balaji Bypass, Pali, Rajhasthan 306401',
+        mapUrl: 'https://www.google.com/maps/search/?api=1&query=Galaxy+Hotel%2C+Opp.+72+feet+Balaji+Bypass%2C+Pali%2C+Rajasthan+306401',
+        enabled: true
+      },
+      {
+        name: 'Reception',
+        art: 'media/reception.webp',
+        date: '2026-12-13',
         time: '19:00',
-        venue: 'Shivay Party Plot, Sama Savli Road, near narmada canal, Vadodara-Gujarat 390024',
-        mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shivay+Party+Plot%2C+Sama+Savli+Road%2C+near+narmada+canal%2C+Vadodara-Gujarat+390024',
+        venue: 'Shrinath Party Plot, Nikol, Ahmedabad 382350',
+        mapUrl: 'https://maps.app.goo.gl/fmoqbroVXpqxZF8a8?g_st=iw',
         enabled: true
       }
     ],
@@ -189,7 +198,7 @@
 
     farewell: { line: 'Your Presence Means the World to Us' },
 
-    social: { instagram: true, instagramUrl: 'https://www.instagram.com/thebeguiling_' },
+    social: { instagram: false, instagramUrl: '' },
 
     music: { enabled: true, src: 'music/Jashn-e-bahara Instrumental.mp3', volume: 0.6 },
   };

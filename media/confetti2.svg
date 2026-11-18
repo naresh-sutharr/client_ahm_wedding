@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <filter id="c2-shadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0.5" dy="1.5" stdDeviation="1" flood-color="#4a1500" flood-opacity="0.35"/>
+    </filter>
+    <linearGradient id="c2-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff8eb"/>
+      <stop offset="30%" stop-color="#fed07c"/>
+      <stop offset="60%" stop-color="#feb669"/>
+      <stop offset="90%" stop-color="#bf7019"/>
+      <stop offset="100%" stop-color="#7a3702"/>
+    </linearGradient>
+    <linearGradient id="c2-rim" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffecba"/>
+      <stop offset="60%" stop-color="#d48020"/>
+      <stop offset="100%" stop-color="#692d00"/>
+    </linearGradient>
+  </defs>
+  <polygon points="16,5 25.5,14.5 16,24 6.5,14.5" fill="url(#c2-gold)" stroke="url(#c2-rim)" stroke-width="0.8" filter="url(#c2-shadow)"/>
+  <polygon points="16,6.5 24,14.5 16,14.5" fill="#ffffff" opacity="0.38"/>
+  <polygon points="16,14.5 6.5,14.5 16,22.5" fill="#7a3702" opacity="0.22"/>
+  <circle cx="16" cy="14.5" r="1.8" fill="#521f00" opacity="0.65"/>
+</svg>
