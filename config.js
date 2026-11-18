@@ -1,10 +1,10 @@
-// Royale - Wedding Invitation Configuration for Dhaval Singh & Bhanvi Kanwar
+// Royale - Wedding Invitation Configuration for Dhaval Sinh & Bhanvi Kanwar
 (function () {
   const params = new URLSearchParams(location.search);
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v6';
+  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v7';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },
@@ -97,9 +97,9 @@
     invocation: { symbol: 'ganesha', religion: 'hindu', script: 'devanagari', custom: '' },
 
     brideName: 'Bhanvi Kanwar',
-    groomName: 'Dhaval Singh',
-    title: 'Dhaval Singh & Bhanvi Kanwar',
-    hostNames: ['Dhaval Singh', 'Bhanvi Kanwar'],
+    groomName: 'Dhaval Sinh',
+    title: 'Dhaval Sinh & Bhanvi Kanwar',
+    hostNames: ['Dhaval Sinh', 'Bhanvi Kanwar'],
 
     introNote: 'we cordially invite you to grace the auspicious occasion of the marriage of…',
 
@@ -109,9 +109,9 @@
 
     groomFamily: {
       enabled: true,
-      name: 'Chi. Dhaval Singh Dahiya',
+      name: 'Chi. Dhaval Sinh Dahiya',
       relLabel: 'Son of',
-      parentA: 'Shri Paresh Singh Daya (Dahiya)',
+      parentA: 'Shri Paresh Sinh Ji Daya (Dahiya)',
       parentB: 'Smt. Hina Kanwar',
       grandLabel: '',
       grandA: '',
@@ -121,8 +121,8 @@
       enabled: true,
       name: 'Kum. Bhanvi Kanwar',
       relLabel: 'Daughter of',
-      parentA: 'Shri Ugam Singh',
-      parentB: 'Smt. Devi Kanwar',
+      parentA: 'Shri Dinesh Sinh Ji',
+      parentB: 'Smt. Gayatri Kanwar',
       grandLabel: '',
       grandA: '',
       grandB: '',

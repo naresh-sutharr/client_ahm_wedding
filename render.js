@@ -668,7 +668,7 @@
     }
     const names = document.querySelector('.royale-outro__names');
     if (names) {
-      names.innerHTML = 'Dhaval Singh &amp; Bhanvi Kanwar';
+      names.innerHTML = 'Dhaval Sinh &amp; Bhanvi Kanwar';
       names.hidden = false;
     }
     editable(document.querySelector('.royale-outro__line'), 'farewell.line', cfg.farewell.line, { placeholder: 'Your closing line' });
