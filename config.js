@@ -4,7 +4,7 @@
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v7';
+  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v8';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },
@@ -121,7 +121,7 @@
       enabled: true,
       name: 'Kum. Bhanvi Kanwar',
       relLabel: 'Daughter of',
-      parentA: 'Shri Dinesh Sinh Ji',
+      parentA: 'Shri Dinesh Sinh Ji Bhati',
       parentB: 'Smt. Gayatri Kanwar',
       grandLabel: '',
       grandA: '',
