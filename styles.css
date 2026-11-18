@@ -1329,13 +1329,34 @@ body::before {
   }
 }
 
-/* --- Live Royal Countdown Timer --- */
+/* --- Live Royal Countdown Timer (Reveals together with Date Reveal) --- */
 .royale-countdown {
   position: relative;
   z-index: 3;
-  margin-top: clamp(20px, 3.5vw, 42px);
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(24px) scale(0.96);
   padding: 0 16px;
   text-align: center;
+  transition: opacity 800ms ease 150ms,
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1) 150ms,
+              max-height 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              margin-top 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-revealing .royale-countdown,
+.is-revealed .royale-countdown {
+  opacity: 1;
+  visibility: visible;
+  max-height: 800px;
+  overflow: visible;
+  pointer-events: auto;
+  margin-top: clamp(24px, 4vw, 44px);
+  transform: translateY(0) scale(1);
 }
 
 .royale-countdown__title {
@@ -1369,6 +1390,10 @@ body::before {
   transform: translateY(-2px);
 }
 
+.royale-countdown__card.is-set {
+  animation: ry-date-knock 420ms ease-out 1;
+}
+
 .royale-countdown__cap {
   position: absolute;
   left: 18%;
@@ -1392,9 +1417,32 @@ body::before {
   right: 14%;
   top: 26%;
   bottom: 7%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.royale-countdown__strip {
+  display: block;
+  width: 100%;
+  will-change: transform;
+}
+
+.royale-countdown__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 3.4vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #feb669;
+  text-shadow: 0 1px 3px rgba(40, 2, 16, 0.7), 0 0 10px rgba(254, 182, 105, 0.3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .royale-countdown__num {
@@ -1405,12 +1453,18 @@ body::before {
   letter-spacing: 0.04em;
   color: #feb669;
   text-shadow: 0 1px 3px rgba(40, 2, 16, 0.7), 0 0 10px rgba(254, 182, 105, 0.3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 @media (max-width: 699px) {
   .royale-countdown {
-    margin-top: 18px;
     padding: 0 6px;
+  }
+
+  .is-revealing .royale-countdown,
+  .is-revealed .royale-countdown {
+    margin-top: 18px;
   }
 
   .royale-countdown__title {
@@ -1427,6 +1481,7 @@ body::before {
     letter-spacing: 0.06em;
   }
 
+  .royale-countdown__cell,
   .royale-countdown__num {
     font-size: clamp(15px, 5vw, 22px);
   }

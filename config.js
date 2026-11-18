@@ -4,7 +4,7 @@
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v5';
+  const STORAGE_KEY = 'royaleConfig_DhavalBhanvi_v6';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },

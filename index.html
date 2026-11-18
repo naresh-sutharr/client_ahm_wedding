@@ -280,32 +280,32 @@
             <p class="royale-date__said" id="ryRevealSaid" aria-live="polite"></p>
         </div>
 
-        <!-- Live Royal Countdown Timer -->
+        <!-- Live Royal Countdown Timer (Reveals with animation alongside date) -->
         <div class="royale-countdown" id="ryCountdown" aria-label="Countdown to wedding celebrations">
-            <p class="royale-countdown__title">Counting Down to the Auspicious Day</p>
+            <p class="royale-countdown__title">Counting Down to 12 December 2026 • 5:30 PM</p>
             <div class="royale-countdown__grid" role="timer" aria-live="polite">
-                <div class="royale-countdown__card">
+                <div class="royale-countdown__card" data-cd-dial="days">
                     <span class="royale-countdown__cap">Days</span>
                     <div class="royale-countdown__window">
-                        <span class="royale-countdown__num" id="ryCountDays">00</span>
+                        <div class="royale-countdown__strip" data-strip></div>
                     </div>
                 </div>
-                <div class="royale-countdown__card">
+                <div class="royale-countdown__card" data-cd-dial="hours">
                     <span class="royale-countdown__cap">Hours</span>
                     <div class="royale-countdown__window">
-                        <span class="royale-countdown__num" id="ryCountHours">00</span>
+                        <div class="royale-countdown__strip" data-strip></div>
                     </div>
                 </div>
-                <div class="royale-countdown__card">
+                <div class="royale-countdown__card" data-cd-dial="mins">
                     <span class="royale-countdown__cap">Minutes</span>
                     <div class="royale-countdown__window">
-                        <span class="royale-countdown__num" id="ryCountMins">00</span>
+                        <div class="royale-countdown__strip" data-strip></div>
                     </div>
                 </div>
-                <div class="royale-countdown__card">
+                <div class="royale-countdown__card" data-cd-dial="secs">
                     <span class="royale-countdown__cap">Seconds</span>
                     <div class="royale-countdown__window">
-                        <span class="royale-countdown__num" id="ryCountSecs">00</span>
+                        <div class="royale-countdown__strip" data-strip></div>
                     </div>
                 </div>
             </div>
@@ -797,7 +797,6 @@
     <script src="render.js"></script>
     <script src="app.js"></script>
     <script src="date-reveal.js"></script>
-    <script src="countdown.js"></script>
     <script src="gallery.js"></script>
     <script src="social.js"></script>
 

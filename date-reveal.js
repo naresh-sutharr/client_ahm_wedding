@@ -1,12 +1,8 @@
-// Royale - the date reveal.
+// Royale - the date reveal & live countdown roll.
 //
-// Three plaques that stay empty until the guest presses "Reveal the Date",
-// then roll like dials and settle on the wedding date - day, then month, then
-// year. The same mechanism as papercut's date-reveal.js, on Royale's own
-// markup and classes (see "date reveal" in styles.css).
-//
-// The date is the section's data-date, YYYY-MM-DD. Left empty it falls back
-// to 15 days from today, which is papercut's own placeholder date.
+// Three date plaques and four countdown cards that stay clean until the guest
+// presses "Reveal the Date", then roll simultaneously like dials and settle
+// together on the wedding date & remaining time, followed by golden confetti burst.
 (function () {
   'use strict';
 
@@ -23,6 +19,10 @@
   var after = document.getElementById('ryRevealAfter');
   var said = document.getElementById('ryRevealSaid');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Target: 12th December 2026, 5:30 PM IST (UTC+05:30)
+  var TARGET_MS = new Date('2026-12-12T17:30:00+05:30').getTime();
+  var cdTimer = null;
 
   var spent = false;
   if (btn) btn.addEventListener('click', run);
@@ -42,22 +42,28 @@
     }
 
     if (reduced) {
-      // No roll: the values fade in, in the same date -> month -> year order.
       settleAll();
       announce();
-      window.setTimeout(finish, 90 + 2 * 260 + 420);
+      window.setTimeout(function () {
+        finish();
+        startCountdownTicker();
+      }, 90 + 2 * 260 + 420);
       return;
     }
 
-    // All three start together and the later ones simply run longer, which
-    // is how a real set of dials behaves.
+    // All date dials roll together
     roll('day', dayCells(), 2, 1750);
     roll('month', monthCells(), 2, 2250);
     roll('year', yearCells(), 2, 2750);
 
-    // The gold goes up the moment the last dial lands, and the plaques knock
-    // just behind it - so they jump at the burst rather than having quietly
-    // settled one at a time on the way there.
+    // Countdown dials roll synchronously with the date dials
+    var cdVals = getCountdownValues(2750);
+    rollCd('days', cdCells('days', cdVals.days), 2, 1750);
+    rollCd('hours', cdCells('hours', cdVals.hours), 2, 2100);
+    rollCd('mins', cdCells('mins', cdVals.mins), 2, 2450);
+    rollCd('secs', cdCells('secs', cdVals.secs), 2, 2750);
+
+    // The gold goes up the moment the last dial lands, and all plaques knock
     window.setTimeout(function () {
       confetti();
       knock();
@@ -66,6 +72,7 @@
     window.setTimeout(function () {
       finish();
       announce();
+      startCountdownTicker();
     }, 2750 + 420);
   }
 
@@ -79,18 +86,8 @@
     'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIj4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9ImMzLXNoYWRvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE1MCUiIGhlaWdodD0iMTUwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAuNSIgZHk9IjEuNSIgc3RkRGV2aWF0aW9uPSIxIiBmbG9vZC1jb2xvcj0iIzRhMTUwMCIgZmxvb2Qtb3BhY2l0eT0iMC4zNSIvPgogICAgPC9maWx0ZXI+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImMzLWdvbGQiIHgxPSIyMCUiIHkxPSIwJSIgeDI9IjgwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjAlIiBzdG9wLWNvbG9yPSIjZmVkYjkxIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTUlIiBzdG9wLWNvbG9yPSIjZmViNjY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iODUlIiBzdG9wLWNvbG9yPSIjYzk3NDE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgwMzgwMyIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYzMtcmltIiB4MT0iMCUiIHkxPSIxMDAlIiB4Mj0iMTAwJSIgeTI9IjAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmYxZDAiLz4KICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZTA4ZTJiIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2NjI5MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxwYXRoIGQ9Ik0xNiw1IEMxNi44LDExIDIwLDE0LjIgMjYsMTUgQzIwLDE1LjggMTYuOCwxOSAxNiwyNSBDMTUuMiwxOSAxMiwxNS44IDYsMTUgQzEyLDE0LjIgMTUuMiwxMSAxNiw1IFoiIGZpbGw9InVybCgjYzMtZ29sZCkiIHN0cm9rZT0idXJsKCNjMy1yaW0pIiBzdHJva2Utd2lkdGg9IjAuOCIgZmlsdGVyPSJ1cmwoI2MzLXNoYWRvdykiLz4KICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjE1IiByPSIyLjIiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuNzUiLz4KPC9zdmc+Cg=='
   ];
 
-  // Fetched now rather than at the press, so the first beads are not blank.
   BEADS.forEach(function (src) { (new Image()).src = src; });
 
-  /**
-   * A handful of gold thrown up out of each elephant's howdah as the date
-   * lands. Every bead is three nested elements - one to drift sideways, one
-   * to carry the arc, one to tumble - because three motions sharing a single
-   * transform is what makes confetti turn corners. Each throw is written into
-   * custom properties, so the animation itself is the stylesheet's (see
-   * ry-flake-drift and its neighbours) and nothing here runs per frame. The
-   * layer takes itself away afterwards.
-   */
   function confetti() {
     if (reduced) return;
     var stage = section.querySelector('.royale-date__stage');
@@ -103,14 +100,11 @@
     stage.appendChild(layer);
 
     var box = stage.getBoundingClientRect();
-    // Sizes and distances in hundredths of the stage, so the burst is the
-    // same shape on a phone as on a desktop.
     var unit = box.width / 100;
 
     Array.prototype.forEach.call(elephants, function (el) {
       var r = el.getBoundingClientRect();
       var left = el.classList.contains('royale-date__elephant--left');
-      // The howdah rides high on the elephant's back, in from the tail.
       var x = r.left - box.left + r.width * (left ? 0.42 : 0.58);
       var y = r.top - box.top + r.height * 0.08;
       for (var i = 0; i < 26; i++) flake(layer, x, y, left ? 1 : -1, unit);
@@ -126,8 +120,6 @@
     var arc = document.createElement('i');
     var bead = document.createElement('img');
     var rand = function (lo, hi) { return lo + Math.random() * (hi - lo); };
-    // The drawing carries its own shadow, so the bead itself is about
-    // two thirds of the box.
     var w = rand(1.6, 3.1) * unit;
 
     el.className = 'ryd-flake';
@@ -139,7 +131,6 @@
     el.style.left = x.toFixed(1) + 'px';
     el.style.top = y.toFixed(1) + 'px';
     el.style.setProperty('--w', w.toFixed(1) + 'px');
-    // Thrown up and inward, then carried on out and down.
     el.style.setProperty('--dx', ((rand(6, 30) * dir + rand(-6, 6)) * unit).toFixed(1) + 'px');
     el.style.setProperty('--rise', (-rand(12, 30) * unit).toFixed(1) + 'px');
     el.style.setProperty('--fall', (rand(10, 30) * unit).toFixed(1) + 'px');
@@ -159,10 +150,7 @@
   }
 
   /**
-   * Build one dial's strip and roll it. `loops` decoy passes go in front of
-   * the real value, which is the last cell - so the roll always ends on it.
-   * The strip is written here, at press time, so before the press the window
-   * genuinely holds nothing.
+   * Roll a date dial strip.
    */
   function roll(name, cells, loops, duration) {
     var plaque = section.querySelector('[data-dial="' + name + '"]');
@@ -177,15 +165,50 @@
 
     strip.style.transition = 'none';
     strip.style.transform = 'translateY(0)';
-    // Commit the start position before arming the transition, or the two
-    // writes coalesce and nothing moves.
     void strip.offsetHeight;
 
     strip.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.16, 1, 0.3, 1)';
     strip.style.transform = 'translateY(calc(' + (-(seq.length - 1)) + ' * var(--cell-h)))';
   }
 
-  /** The hop the three plaques give as the gold goes up, left to right. */
+  /**
+   * Roll a countdown dial strip.
+   */
+  function rollCd(name, cells, loops, duration) {
+    var card = section.querySelector('[data-cd-dial="' + name + '"]');
+    var win = card && card.querySelector('.royale-countdown__window');
+    var strip = card && card.querySelector('[data-strip]');
+    if (!strip || !win) return;
+
+    var seq = [''];
+    for (var l = 0; l < loops; l++) seq = seq.concat(cells.all);
+    seq = seq.concat(cells.all.slice(0, cells.index + 1));
+
+    var h = win.clientHeight || 42;
+
+    strip.innerHTML = seq.map(function (val) {
+      return '<div class="royale-countdown__cell" style="height:' + h + 'px">' + val + '</div>';
+    }).join('');
+
+    strip.style.transition = 'none';
+    strip.style.transform = 'translateY(0)';
+    void strip.offsetHeight;
+
+    strip.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.16, 1, 0.3, 1)';
+    strip.style.transform = 'translateY(' + (-(seq.length - 1) * h) + 'px)';
+
+    window.setTimeout(function () {
+      var finalVal = cells.all[cells.index];
+      strip.style.transition = 'none';
+      strip.style.transform = 'none';
+      var id = 'ryCount' + name.charAt(0).toUpperCase() + name.slice(1);
+      strip.innerHTML = '<span class="royale-countdown__num" id="' + id + '">' + finalVal + '</span>';
+    }, duration + 60);
+  }
+
+  /**
+   * Royal hop when all dials land together.
+   */
   function knock() {
     ['day', 'month', 'year'].forEach(function (name, i) {
       var plaque = section.querySelector('[data-dial="' + name + '"]');
@@ -195,9 +218,17 @@
         window.setTimeout(function () { plaque.classList.remove('is-set'); }, 420);
       }, 90 + i * 90);
     });
+
+    ['days', 'hours', 'mins', 'secs'].forEach(function (name, i) {
+      var card = section.querySelector('[data-cd-dial="' + name + '"]');
+      if (!card) return;
+      window.setTimeout(function () {
+        card.classList.add('is-set');
+        window.setTimeout(function () { card.classList.remove('is-set'); }, 420);
+      }, 140 + i * 80);
+    });
   }
 
-  /** Every plaque straight onto its value, fading in one after another. */
   function settleAll() {
     [['day', dayCells()], ['month', monthCells()], ['year', yearCells()]]
       .forEach(function (pair, i) {
@@ -207,6 +238,16 @@
         strip.innerHTML = cell(pair[1].all[pair[1].index]);
         plaque.classList.add('is-fading');
         window.setTimeout(function () { plaque.classList.add('is-shown'); }, 90 + i * 260);
+      });
+
+    var cd = getCountdownValues(0);
+    [['days', cd.days], ['hours', cd.hours], ['mins', cd.mins], ['secs', cd.secs]]
+      .forEach(function (pair) {
+        var card = section.querySelector('[data-cd-dial="' + pair[0] + '"]');
+        var strip = card && card.querySelector('[data-strip]');
+        if (!strip) return;
+        var id = 'ryCount' + pair[0].charAt(0).toUpperCase() + pair[0].slice(1);
+        strip.innerHTML = '<span class="royale-countdown__num" id="' + id + '">' + pad(pair[1]) + '</span>';
       });
   }
 
@@ -232,11 +273,64 @@
     return { all: MONTHS.slice(), index: when.month - 1 };
   }
 
-  /** Years around the real one, so the dial has somewhere to travel. */
   function yearCells() {
     var all = [];
     for (var y = when.year - 4; y <= when.year + 3; y++) all.push(String(y));
     return { all: all, index: all.indexOf(String(when.year)) };
+  }
+
+  // ---- countdown logic ------------------------------------------------------
+
+  function getCountdownValues(offsetMs) {
+    var now = Date.now() + (offsetMs || 0);
+    var diff = Math.max(0, TARGET_MS - now);
+    var totalSeconds = Math.floor(diff / 1000);
+    var days = Math.floor(totalSeconds / 86400);
+    var hours = Math.floor((totalSeconds % 86400) / 3600);
+    var minutes = Math.floor((totalSeconds % 3600) / 60);
+    var seconds = totalSeconds % 60;
+    return { days: days, hours: hours, mins: minutes, secs: seconds };
+  }
+
+  function cdCells(type, targetVal) {
+    var all = [];
+    var i;
+    var targetStr = pad(targetVal);
+
+    if (type === 'days') {
+      for (i = Math.max(0, targetVal - 6); i <= targetVal + 4; i++) {
+        all.push(pad(i));
+      }
+    } else if (type === 'hours') {
+      for (i = 0; i < 24; i += 2) all.push(pad(i));
+    } else {
+      for (i = 0; i < 60; i += 5) all.push(pad(i));
+    }
+
+    if (all.indexOf(targetStr) === -1) {
+      all.push(targetStr);
+    }
+    return { all: all, index: all.indexOf(targetStr) };
+  }
+
+  function startCountdownTicker() {
+    if (cdTimer) clearInterval(cdTimer);
+
+    function tick() {
+      var cur = getCountdownValues(0);
+      var dEl = document.getElementById('ryCountDays');
+      var hEl = document.getElementById('ryCountHours');
+      var mEl = document.getElementById('ryCountMins');
+      var sEl = document.getElementById('ryCountSecs');
+
+      if (dEl) dEl.textContent = pad(cur.days);
+      if (hEl) hEl.textContent = pad(cur.hours);
+      if (mEl) mEl.textContent = pad(cur.mins);
+      if (sEl) sEl.textContent = pad(cur.secs);
+    }
+
+    tick();
+    cdTimer = setInterval(tick, 1000);
   }
 
   // ---- the date -------------------------------------------------------------
