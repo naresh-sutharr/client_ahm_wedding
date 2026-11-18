@@ -1,10 +1,10 @@
-// Royale - Wedding Invitation Configuration for Bhavikunwar & Dhawalsingh
+// Royale - Wedding Invitation Configuration for Dhawal Singh & Bhanvi Kanwar
 (function () {
   const params = new URLSearchParams(location.search);
   const mode = params.has('edit') ? 'edit' : params.has('preview') ? 'preview' : 'view';
   const trial = false;
   const TRIAL_EDITABLE = ['invocation.religion', 'brideName', 'groomName'];
-  const STORAGE_KEY = 'royaleConfig_BhavikunwarDhawalsingh_v1';
+  const STORAGE_KEY = 'royaleConfig_DhawalBhanvi_v2';
 
   const SYMBOLS = [
     { id: 'ganesha', label: 'Ganesha', src: 'symbols/_ganesha.svg' },
@@ -96,10 +96,10 @@
 
     invocation: { symbol: 'ganesha', religion: 'hindu', script: 'devanagari', custom: '' },
 
-    brideName: 'Bhavikunwar',
-    groomName: 'Dhawalsingh',
-    title: 'Bhavikunwar & Dhawalsingh',
-    hostNames: ['Bhavikunwar', 'Dhawalsingh'],
+    brideName: 'Bhanvi Kanwar',
+    groomName: 'Dhawal Singh',
+    title: 'Dhawal Singh & Bhanvi Kanwar',
+    hostNames: ['Dhawal Singh', 'Bhanvi Kanwar'],
 
     introNote: 'we cordially invite you to grace the auspicious occasion of the marriage of…',
 
@@ -109,17 +109,17 @@
 
     groomFamily: {
       enabled: true,
-      name: 'Chi. Dhawalsingh Dahiya',
+      name: 'Chi. Dhawal Singh Dahiya',
       relLabel: 'Son of',
       parentA: 'Shri Paresh Singh Daya (Dahiya)',
-      parentB: 'Smt. Hinawarkunwar',
+      parentB: 'Smt. Hina Kanwar',
       grandLabel: '',
       grandA: '',
       grandB: '',
     },
     brideFamily: {
       enabled: true,
-      name: 'Kum. Bhavikunwar',
+      name: 'Kum. Bhanvi Kanwar',
       relLabel: 'Daughter of',
       parentA: 'Shri Dinesh Singh Bhati',
       parentB: 'Smt. Gayatrikunwar',
@@ -225,8 +225,8 @@
     const cfg = window.Royale.config;
     const bride = (cfg.brideName || '').trim();
     const groom = (cfg.groomName || '').trim();
-    cfg.title = bride && groom ? bride + ' & ' + groom : (bride || groom || 'Our Wedding');
-    cfg.hostNames = [bride, groom].filter(Boolean);
+    cfg.title = groom && bride ? groom + ' & ' + bride : (groom || bride || 'Our Wedding');
+    cfg.hostNames = [groom, bride].filter(Boolean);
   }
 
   function save() {
